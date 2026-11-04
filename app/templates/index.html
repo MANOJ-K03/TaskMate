@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TaskMate</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>TaskMate</h1>
+    <nav aria-label="Main">
+      <button class="tab active" data-view="tasks">Tasks</button>
+      <button class="tab" data-view="insights">Database insights</button>
+    </nav>
+    <button id="newTaskBtn" class="btn primary">Add task</button>
+  </header>
+
+  <main>
+    <section id="view-tasks">
+      <div class="stats" id="stats"></div>
+
+      <form class="filters" id="filters" onsubmit="return false">
+        <input type="search" id="fSearch" placeholder="Search by title" aria-label="Search by title">
+        <select id="fCategory" aria-label="Filter by category"></select>
+        <select id="fPriority" aria-label="Filter by priority">
+          <option value="">All priorities</option><option>Low</option><option>Medium</option><option>High</option>
+        </select>
+        <select id="fStatus" aria-label="Filter by status">
+          <option value="">All statuses</option><option>Pending</option><option>In Progress</option><option>Completed</option>
+        </select>
+        <select id="fSort" aria-label="Sort tasks">
+          <option value="due_asc">Due date: earliest first</option>
+          <option value="due_desc">Due date: latest first</option>
+          <option value="newest">Recently added</option>
+        </select>
+        <button type="button" id="newCategoryBtn" class="btn">Add category</button>
+      </form>
+
+      <div id="taskList" class="task-grid"></div>
+    </section>
+
+    <section id="view-insights" hidden></section>
+  </main>
+
+  <dialog id="taskDialog">
+    <form id="taskForm" method="dialog">
+      <h2 id="taskDialogTitle">Add task</h2>
+      <label>Title <input id="tTitle" required maxlength="120"></label>
+      <label>Description <textarea id="tDesc" rows="3"></textarea></label>
+      <div class="row">
+        <label>Category <select id="tCategory"></select></label>
+        <label>Due date <input type="date" id="tDue"></label>
+      </div>
+      <div class="row">
+        <label>Priority
+          <select id="tPriority"><option>Low</option><option selected>Medium</option><option>High</option></select>
+        </label>
+        <label>Status
+          <select id="tStatus"><option selected>Pending</option><option>In Progress</option><option>Completed</option></select>
+        </label>
+      </div>
+      <p class="form-error" id="taskError" role="alert"></p>
+      <div class="dialog-actions">
+        <button type="button" class="btn" data-close>Cancel</button>
+        <button type="submit" class="btn primary" id="taskSave">Save task</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="categoryDialog">
+    <form id="categoryForm" method="dialog">
+      <h2>Add category</h2>
+      <label>Name <input id="cName" required></label>
+      <label>Description <input id="cDesc"></label>
+      <p class="form-error" id="categoryError" role="alert"></p>
+      <div class="dialog-actions">
+        <button type="button" class="btn" data-close>Cancel</button>
+        <button type="submit" class="btn primary">Save category</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="historyDialog">
+    <h2 id="historyTitle">Task history</h2>
+    <div id="historyBody"></div>
+    <div class="dialog-actions"><button type="button" class="btn" data-close>Close</button></div>
+  </dialog>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
